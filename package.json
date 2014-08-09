@@ -1,0 +1,26 @@
+{
+  "name": "geoip-server",
+  "description": "Simple HTTP GeoIP API server.",
+  "author": "Andy Burke <aburke@bitflood.org>",
+  "version": "0.0.1",
+  "contributors": {
+    "name": "Philip Tellis",
+    "email": "philip@bluesmoon.info",
+    "url": "http://bluesmoon.info"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andyburke/node-geoip-server.git"
+  },
+  "main": "index.js",
+  "bin": "cli.js",
+  "dependencies": {
+    "commander": "^1.2.0",
+    "express": "4.0.x",
+    "geoip-native": "andyburke/node-geoip-native",
+    "humanize": "0.0.9",
+    "node-fs": "^0.1.7",
+    "node.extend": "1.0.x"
+  },
+  "engine": "node >= 0.10.0"
+}
