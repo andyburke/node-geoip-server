@@ -1,3 +1,7 @@
+0.0.4
+-----
+- Return 404 on failed geo lookup.
+
 0.0.3
 -----
 - Allow specifying signature either via query or via header (x-signature).

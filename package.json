@@ -2,7 +2,7 @@
   "name": "geoip-server",
   "description": "Simple HTTP GeoIP API server.",
   "author": "Andy Burke <aburke@bitflood.org>",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "contributors": {
     "name": "Philip Tellis",
     "email": "philip@bluesmoon.info",

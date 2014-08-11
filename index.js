@@ -102,6 +102,14 @@ GeoIPServer.prototype.onLookup = function( request, response ) {
         geo: geo,
         request: request
     } );
+    
+    if ( !geo ) {
+        response.json( {
+            error: 'no geo data',
+            message: 'Could not get geo data for ip: ' + ip
+        }, 404 );
+        return;
+    }
 
     response.json( geo );
 };
