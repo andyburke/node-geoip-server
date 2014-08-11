@@ -1,3 +1,7 @@
+0.0.3
+-----
+- Allow specifying signature either via query or via header (x-signature).
+
 0.0.2
 -----
 - Fix for running from command line.

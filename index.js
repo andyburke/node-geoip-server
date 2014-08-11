@@ -76,7 +76,9 @@ GeoIPServer.prototype.getSignature = function( request ) {
 GeoIPServer.prototype.onLookup = function( request, response ) {
     var self = this;
 
-    if ( self.options.secret && !request.query.signature ) {
+    var signature = request.query.signature || request.headers[ 'x-signature' ];
+    
+    if ( self.options.secret && !signature ) {
         response.json( {
             error: 'signature missing',
             message: 'No signature specified in request.'
@@ -84,7 +86,7 @@ GeoIPServer.prototype.onLookup = function( request, response ) {
         return;
     }
 
-    if ( self.options.secret && ( self.getSignature( request ) != request.query.signature ) ) {
+    if ( self.options.secret && ( self.getSignature( request ) != signature ) ) {
         response.json( {
             error: 'invalid signature',
             message: 'Signature for this request is invalid.'
