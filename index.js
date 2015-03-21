@@ -13,6 +13,7 @@ var geoip = require( 'geoip-native' );
 
 var defaults = {
     lookupURI: '/location/:ip',
+    ipURI: '/ip',
     origin: '*'
 };
 
@@ -53,6 +54,10 @@ GeoIPServer.prototype.attach = function( app ) {
     app.get( self.options.lookupURI, function( request, response, next ) {
         self.onLookup( request, response, next );
     } );
+
+    app.get( self.options.ipURI, function( request, response, next ) {
+        self.onIPLookup( request, response, next );
+    } );
 };
 
 GeoIPServer.prototype.getSignature = function( request ) {
@@ -73,11 +78,26 @@ GeoIPServer.prototype.getSignature = function( request ) {
     return crypto.createHash( 'sha1' ).update( verification ).digest( 'hex' );
 };
 
+GeoIPServer.prototype.onIPLookup = function( request, response ) {
+    var self = this;
+
+    var ip = request.ip;
+
+    self.emit( 'ip-lookup', {
+        ip: ip,
+        request: request
+    } );
+
+    response.json( {
+        ip: ip
+    } );
+};
+
 GeoIPServer.prototype.onLookup = function( request, response ) {
     var self = this;
 
     var signature = request.query.signature || request.headers[ 'x-signature' ];
-    
+
     if ( self.options.secret && !signature ) {
         response.json( {
             error: 'signature missing',
@@ -95,14 +115,14 @@ GeoIPServer.prototype.onLookup = function( request, response ) {
     }
 
     var ip = request.params.ip;
-    
+
     var geo = geoip.lookup( ip );
     self.emit( 'lookup', {
         ip: ip,
         geo: geo,
         request: request
     } );
-    
+
     if ( !geo ) {
         response.json( {
             error: 'no geo data',
@@ -128,6 +148,7 @@ GeoIPServer.prototype.listen = function( _options ) {
 
     var app = express();
     self.attach( app );
+    app.enable('trust proxy');
 
     if ( options.ssl && options.ssl.key && options.ssl.cert ) {
         var httpsServer = https.createServer( {

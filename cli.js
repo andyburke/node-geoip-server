@@ -45,13 +45,20 @@ if ( program.port )          listenOptions.port = program.port;
 if ( program.sslkey )        listenOptions.ssl.key = program.sslkey;
 if ( program.sslcert )       listenOptions.ssl.cert = program.sslcert;
 
-var geoIPServer = new GeoIPServer( options ).listen( listenOptions );
+var geoIPServer = new GeoIPServer( options );
 
 if ( !program.quiet )
 {
-    console.log( "GeoIPServer started..." );
-    
+
+    console.log( "GeoIPServer starting..." );
+
+    geoIPServer.on( 'listening', function( event ) {
+        console.log( "Listening on port " + event.port + " ( SSL: " + ( event.ssl ? 'true' : 'false' ) + " )" );
+    } );
+
     geoIPServer.on( 'lookup', function( event ) {
         console.log( humanize.date( 'c' ) + ' lookup: ' + event.ip );
     } );
 }
+
+geoIPServer.listen( listenOptions );
