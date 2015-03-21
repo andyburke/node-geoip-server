@@ -2,15 +2,23 @@
   "name": "geoip-server",
   "description": "Simple HTTP GeoIP API server.",
   "author": "Andy Burke <aburke@bitflood.org>",
-  "version": "0.0.4",
-  "contributors": {
+  "version": "0.0.5",
+  "keywords": [ "geo", "geoip", "geo-ip", "geo ip", "geoip server" ],
+  "contributors": [ {
+    "name": "Greg Cardoni",
+    "email": "greg@cardoni.net",
+    "url": "http://cardoni.net"
+    }, {
     "name": "Philip Tellis",
     "email": "philip@bluesmoon.info",
     "url": "http://bluesmoon.info"
-  },
+  } ],
   "repository": {
     "type": "git",
     "url": "https://github.com/andyburke/node-geoip-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/andyburke/node-geoip-server/issues"
   },
   "main": "index.js",
   "bin": "cli.js",
